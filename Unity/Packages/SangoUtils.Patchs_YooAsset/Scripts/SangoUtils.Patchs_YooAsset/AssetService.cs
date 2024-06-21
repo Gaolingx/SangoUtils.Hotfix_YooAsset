@@ -40,6 +40,7 @@ namespace SangoUtils.Patchs_YooAsset
         private List<AssetHandle> _cacheAssetHandles = new();
 
         private Dictionary<string, AssetHandle> _audioClipHandleDict = new();
+        private Dictionary<string, AssetHandle> _textAssetHandleDict = new();
         private Dictionary<string, AssetHandle> _videoClipHandleDict = new();
         private Dictionary<string, AssetHandle> _spriteHandleDict = new();
         private Dictionary<string, AssetHandle> _prefabHandleDict = new();
@@ -49,13 +50,14 @@ namespace SangoUtils.Patchs_YooAsset
 
         }
 
-        public AudioClip LoadAudioClip(string audioClipPath, bool isCache)
+        public AudioClip LoadAudioClip(string packageName, string audioClipPath, bool isCache)
         {
             AudioClip audioClip = null;
             _audioClipHandleDict.TryGetValue(audioClipPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetSync<AudioClip>(audioClipPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetSync<AudioClip>(audioClipPath);
                 audioClip = handle.AssetObject as AudioClip;
                 if (isCache)
                 {
@@ -76,13 +78,42 @@ namespace SangoUtils.Patchs_YooAsset
             return audioClip;
         }
 
-        public void LoadAudioClipASync(string audioClipPath, Action<AudioClip> assetLoadedCallBack, bool isCache)
+        public TextAsset LoadTextAsset(string packageName, string textAssetPath, bool isCache)
+        {
+            TextAsset textAsset = null;
+            _textAssetHandleDict.TryGetValue(textAssetPath, out AssetHandle handle);
+            if (handle == null)
+            {
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetSync<TextAsset>(textAssetPath);
+                textAsset = handle.AssetObject as TextAsset;
+                if (isCache)
+                {
+                    if (!_textAssetHandleDict.ContainsKey(textAssetPath))
+                    {
+                        _textAssetHandleDict.Add(textAssetPath, handle);
+                    }
+                }
+                else
+                {
+                    GCAssetHandleTODO(handle);
+                }
+            }
+            else
+            {
+                textAsset = handle.AssetObject as TextAsset;
+            }
+            return textAsset;
+        }
+
+        public void LoadAudioClipASync(string packageName, string audioClipPath, Action<AudioClip> assetLoadedCallBack, bool isCache)
         {
             AudioClip audioClip = null;
             _audioClipHandleDict.TryGetValue(audioClipPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetAsync<AudioClip>(audioClipPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetAsync<AudioClip>(audioClipPath);
                 handle.Completed += (handle) =>
                 {
                     audioClip = handle.AssetObject as AudioClip;
@@ -107,13 +138,14 @@ namespace SangoUtils.Patchs_YooAsset
             }
         }
 
-        public VideoClip LoadVideoClip(string videoClipPath, bool isCache)
+        public VideoClip LoadVideoClip(string packageName, string videoClipPath, bool isCache)
         {
             VideoClip videoClip = null;
             _videoClipHandleDict.TryGetValue(videoClipPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetSync<VideoClip>(videoClipPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetSync<VideoClip>(videoClipPath);
                 videoClip = handle.AssetObject as VideoClip;
                 if (isCache)
                 {
@@ -134,13 +166,14 @@ namespace SangoUtils.Patchs_YooAsset
             return videoClip;
         }
 
-        public void LoadVideoClipASync(string videoClipPath, Action<VideoClip> assetLoadedCallBack, bool isCache)
+        public void LoadVideoClipASync(string packageName, string videoClipPath, Action<VideoClip> assetLoadedCallBack, bool isCache)
         {
             VideoClip videoClip = null;
             _videoClipHandleDict.TryGetValue(videoClipPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetAsync<VideoClip>(videoClipPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetAsync<VideoClip>(videoClipPath);
                 handle.Completed += (handle) =>
                 {
                     videoClip = handle.AssetObject as VideoClip;
@@ -165,13 +198,14 @@ namespace SangoUtils.Patchs_YooAsset
             }
         }
 
-        public GameObject LoadPrefab(string prefabPath, bool isCache)
+        public GameObject LoadPrefab(string packageName, string prefabPath, bool isCache)
         {
             GameObject prefab = null;
             _prefabHandleDict.TryGetValue(prefabPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetSync<GameObject>(prefabPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetSync<GameObject>(prefabPath);
                 prefab = handle.AssetObject as GameObject;
                 if (isCache)
                 {
@@ -192,13 +226,14 @@ namespace SangoUtils.Patchs_YooAsset
             return prefab;
         }
 
-        public void LoadPrefabASync(string prefabPath, Action<GameObject> assetLoadedCallBack, bool isCache)
+        public void LoadPrefabASync(string packageName, string prefabPath, Action<GameObject> assetLoadedCallBack, bool isCache)
         {
             GameObject prefab = null;
             _prefabHandleDict.TryGetValue(prefabPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetAsync<GameObject>(prefabPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetAsync<GameObject>(prefabPath);
                 handle.Completed += (handle) =>
                 {
                     prefab = handle.AssetObject as GameObject;
@@ -223,20 +258,21 @@ namespace SangoUtils.Patchs_YooAsset
             }
         }
 
-        public GameObject InstantiatePrefab(Transform parentTrans, string prefabPath, bool isCache)
+        public GameObject InstantiatePrefab(string packageName, Transform parentTrans, string prefabPath, bool isCache)
         {
-            GameObject prefab = LoadPrefab(prefabPath, isCache);
+            GameObject prefab = LoadPrefab(packageName, prefabPath, isCache);
             GameObject instantiatedPrefab = Instantiate(prefab, parentTrans);
             return instantiatedPrefab;
         }
 
-        public void InstantiatePrefabASync(Transform parentTrans, string prefabPath, Action<GameObject> assetLoadedCallBack, bool isCache)
+        public void InstantiatePrefabASync(string packageName, Transform parentTrans, string prefabPath, Action<GameObject> assetLoadedCallBack, bool isCache)
         {
             GameObject prefab = null;
             _prefabHandleDict.TryGetValue(prefabPath, out AssetHandle handle);
             if (handle == null)
             {
-                handle = YooAssets.LoadAssetAsync<GameObject>(prefabPath);
+                var package = YooAssets.GetPackage(packageName);
+                handle = package.LoadAssetAsync<GameObject>(prefabPath);
                 handle.Completed += (handle) =>
                 {
                     prefab = handle.InstantiateSync(parentTrans);

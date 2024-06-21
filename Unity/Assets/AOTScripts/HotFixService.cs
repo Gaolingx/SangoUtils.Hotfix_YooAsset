@@ -2,18 +2,30 @@ using SangoUtils.Patchs_YooAsset;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using YooAsset;
 
 [RequireComponent(typeof(HotFixConfig))]
 public class HotFixService : MonoBehaviour
 {
     public static HotFixService Instance { get; private set; }
+    
+    public SangoPatchRoot sangoPatchRoot;
 
     public void InitService()
     {
         Instance = this;
-        PatchService.Instance.SetConfig(GetPatchConfig());
-        PatchService.Instance.Initialize();
+        InitPatchService();
+    }
+
+    private void InitPatchService()
+    {
+        if (sangoPatchRoot != null)
+        {
+            PatchService.Instance.SetConfig(GetPatchConfig());
+            sangoPatchRoot.OnInit();
+            PatchService.Instance.Initialize();
+        }
     }
 
     private PatchConfig GetPatchConfig()

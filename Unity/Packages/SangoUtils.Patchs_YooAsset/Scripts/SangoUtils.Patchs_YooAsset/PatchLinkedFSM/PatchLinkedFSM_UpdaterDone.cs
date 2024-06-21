@@ -35,7 +35,11 @@ namespace SangoUtils.Patchs_YooAsset
             var package = YooAssets.GetPackage(packageName);
             var GameRootObject = (string)_fsmLinkedStater.GetBlackboardValue("GameRootObjectName");
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
+            var CanvasTransform = GameObject.Find("Canvas").transform; //根据实际情况修改
             GameObject hotFixRoot = asset1.InstantiateSync();
+            hotFixRoot.transform.parent = CanvasTransform;
+            hotFixRoot.transform.position = Vector3.zero;
+            hotFixRoot.transform.localScale = Vector3.one;
             RectTransform rect = hotFixRoot.GetComponent<RectTransform>();
             rect.offsetMax = new Vector2(0, 0);
         }
@@ -53,16 +57,11 @@ namespace SangoUtils.Patchs_YooAsset
         internal void LoadDll(List<string> AOTMetaAssemblyNames, string HotDllName)
         {
             var packageName = (string)_fsmLinkedStater.GetBlackboardValue("PackageName");
-            var package = YooAssets.GetPackage(packageName);
 
-            var dllNameList = new List<string>()
-        {
-            HotDllName,
-        }.Concat(AOTMetaAssemblyNames);
+            var dllNameList = new List<string>() { HotDllName, }.Concat(AOTMetaAssemblyNames);
             foreach (var dllName in dllNameList)
             {
-                var obj = package.LoadRawFileSync(dllName);
-                byte[] fileData = obj.GetRawFileData();
+                byte[] fileData = AssetService.Instance.LoadTextAsset(packageName, dllName, true).bytes;
                 _dllAssetDataDict.Add(dllName, fileData);
                 Debug.Log($"dll:{dllName}  size:{fileData.Length}");
             }
