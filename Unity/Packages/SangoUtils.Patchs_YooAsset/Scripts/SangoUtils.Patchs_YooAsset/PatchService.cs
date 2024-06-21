@@ -1,6 +1,7 @@
 using SangoUtils.Patchs_YooAsset.Utils;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using YooAsset;
 
@@ -79,5 +80,8 @@ namespace SangoUtils.Patchs_YooAsset
         public string PackageName { get; set; }
         public EPlayMode PlayMode { get; set; }
         public EDefaultBuildPipeline BuildPipeline { get; set; }
+        public string GameRootObjectName { get; set; }
+        public string HotUpdateDllName { get; set; }
+        public List<string> AOTMetaAssemblyNames { get; set; }
     }
 }

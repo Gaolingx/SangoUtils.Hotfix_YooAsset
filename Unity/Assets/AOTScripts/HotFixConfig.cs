@@ -12,5 +12,7 @@ public class HotFixConfig : MonoBehaviour
     public bool AppendTimeTicks;
     public EPlayMode PlayMode;
     public EDefaultBuildPipeline BuildPipeline;
-
+    public string GameRootObjectName;
+    public string HotUpdateDllName;
+    public List<string> AOTMetaAssemblyNames;
 }

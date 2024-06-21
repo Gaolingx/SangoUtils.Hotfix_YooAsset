@@ -547,11 +547,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HostServerIP: http://gaolingxiang.dynv6.net:26660
-  AppId: 
+  AppId: 10001
   AppVersion: v1.0
   PackageName: DefaultPackage
+  AppendTimeTicks: 0
   PlayMode: 0
   BuildPipeline: 1
+  GameRootObjectName: Assets/AssetBundles/Prefabs/RootPrefabs/HotFixRoot.prefab
+  HotUpdateDllName: Assets/AssetBundles/Scripts/Dlls/GameMain.dll
+  AOTMetaAssemblyNames:
+  - Assets/AssetBundles/Scripts/Dlls/mscorlib.dll
+  - Assets/AssetBundles/Scripts/Dlls/System.dll
+  - Assets/AssetBundles/Scripts/Dlls/System.Core.dll
+  - Assets/AssetBundles/Scripts/Dlls/System.Xml.dll
+  - Assets/AssetBundles/Scripts/Dlls/UnityEngine.CoreModule.dll
+  - Assets/AssetBundles/Scripts/Dlls/Unity.InputSystem.dll
+  - Assets/AssetBundles/Scripts/Dlls/DOTween.dll
+  - Assets/AssetBundles/Scripts/Dlls/Cinemachine.dll
+  - Assets/AssetBundles/Scripts/Dlls/PESocket.dll
+  - Assets/AssetBundles/Scripts/Dlls/PEProtocol.dll
+  - Assets/AssetBundles/Scripts/Dlls/PETimer.dll
+  - Assets/AssetBundles/Scripts/Dlls/YooAsset.dll
 --- !u!114 &963007399
 MonoBehaviour:
   m_ObjectHideFlags: 0

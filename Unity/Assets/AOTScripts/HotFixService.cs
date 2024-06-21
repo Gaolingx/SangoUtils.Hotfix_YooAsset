@@ -27,6 +27,9 @@ public class HotFixService : MonoBehaviour
         patchConfig.appendTimeTicks = hotFixConfig.AppendTimeTicks;
         patchConfig.PlayMode = hotFixConfig.PlayMode;
         patchConfig.BuildPipeline = hotFixConfig.BuildPipeline;
+        patchConfig.GameRootObjectName = hotFixConfig.GameRootObjectName;
+        patchConfig.HotUpdateDllName = hotFixConfig.HotUpdateDllName;
+        patchConfig.AOTMetaAssemblyNames = hotFixConfig.AOTMetaAssemblyNames;
         return patchConfig;
     }
 }
