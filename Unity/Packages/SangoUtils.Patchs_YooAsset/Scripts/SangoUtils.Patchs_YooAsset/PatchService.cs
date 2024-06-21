@@ -75,7 +75,7 @@ namespace SangoUtils.Patchs_YooAsset
         public string HostServerIP { get; set; }
         public string AppId { get; set; }
         public string AppVersion { get; set; }
-
+        public bool appendTimeTicks { get; set; }
         public string PackageName { get; set; }
         public EPlayMode PlayMode { get; set; }
         public EDefaultBuildPipeline BuildPipeline { get; set; }

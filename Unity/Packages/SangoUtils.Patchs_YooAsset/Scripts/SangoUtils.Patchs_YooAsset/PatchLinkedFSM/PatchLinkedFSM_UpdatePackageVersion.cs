@@ -21,7 +21,8 @@ namespace SangoUtils.Patchs_YooAsset
 
             var packageName = (string)_fsmLinkedStater.GetBlackboardValue("PackageName");
             var package = YooAssets.GetPackage(packageName);
-            var operation = package.UpdatePackageVersionAsync();
+            var appendTimeTicks = (bool)_fsmLinkedStater.GetBlackboardValue("appendTimeTicks");
+            var operation = package.UpdatePackageVersionAsync(appendTimeTicks);
             yield return operation;
 
             if (operation.Status != EOperationStatus.Succeed)

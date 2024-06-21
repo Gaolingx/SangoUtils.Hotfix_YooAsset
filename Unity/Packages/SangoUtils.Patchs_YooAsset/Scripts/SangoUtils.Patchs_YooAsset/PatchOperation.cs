@@ -71,6 +71,7 @@ namespace SangoUtils.Patchs_YooAsset
             _fsmLinkedStater.SetBlackboardValue("HostServerIP", _currentPatchConfig.HostServerIP);
             _fsmLinkedStater.SetBlackboardValue("AppId", _currentPatchConfig.AppId);
             _fsmLinkedStater.SetBlackboardValue("AppVersion", _currentPatchConfig.AppVersion);
+            _fsmLinkedStater.SetBlackboardValue("appendTimeTicks", _currentPatchConfig.appendTimeTicks);
         }
 
         private void C_OnPatchUserEvent(object sender, PatchUserEventArgs eventArgs)
