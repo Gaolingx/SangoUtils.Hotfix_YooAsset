@@ -9,7 +9,7 @@ using YooAsset;
 public class HotFixService : MonoBehaviour
 {
     public static HotFixService Instance { get; private set; }
-    
+
     public SangoPatchRoot sangoPatchRoot;
 
     public void InitService()
@@ -40,6 +40,7 @@ public class HotFixService : MonoBehaviour
         patchConfig.PlayMode = hotFixConfig.PlayMode;
         patchConfig.BuildPipeline = hotFixConfig.BuildPipeline;
         patchConfig.GameRootObjectName = hotFixConfig.GameRootObjectName;
+        patchConfig.GameRootParentTransformName = hotFixConfig.GameRootParentTransformName;
         patchConfig.HotUpdateDllName = hotFixConfig.HotUpdateDllName;
         patchConfig.AOTMetaAssemblyNames = hotFixConfig.AOTMetaAssemblyNames;
         return patchConfig;

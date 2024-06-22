@@ -73,6 +73,7 @@ namespace SangoUtils.Patchs_YooAsset
             _fsmLinkedStater.SetBlackboardValue("AppVersion", _currentPatchConfig.AppVersion);
             _fsmLinkedStater.SetBlackboardValue("appendTimeTicks", _currentPatchConfig.appendTimeTicks);
             _fsmLinkedStater.SetBlackboardValue("GameRootObjectName", _currentPatchConfig.GameRootObjectName);
+            _fsmLinkedStater.SetBlackboardValue("GameRootParentTransformName", _currentPatchConfig.GameRootParentTransformName);
             _fsmLinkedStater.SetBlackboardValue("HotUpdateDllName", _currentPatchConfig.HotUpdateDllName);
             _fsmLinkedStater.SetBlackboardValue("AOTMetaAssemblyNames", _currentPatchConfig.AOTMetaAssemblyNames);
         }

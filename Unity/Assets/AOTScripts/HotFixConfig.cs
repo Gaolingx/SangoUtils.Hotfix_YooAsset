@@ -13,6 +13,7 @@ public class HotFixConfig : MonoBehaviour
     public EPlayMode PlayMode;
     public EDefaultBuildPipeline BuildPipeline;
     public string GameRootObjectName;
+    public string GameRootParentTransformName;
     public string HotUpdateDllName;
     public List<string> AOTMetaAssemblyNames;
 }

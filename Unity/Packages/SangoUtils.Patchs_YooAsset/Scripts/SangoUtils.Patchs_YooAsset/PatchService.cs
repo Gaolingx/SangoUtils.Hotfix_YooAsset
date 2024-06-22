@@ -81,6 +81,7 @@ namespace SangoUtils.Patchs_YooAsset
         public EPlayMode PlayMode { get; set; }
         public EDefaultBuildPipeline BuildPipeline { get; set; }
         public string GameRootObjectName { get; set; }
+        public string GameRootParentTransformName { get; set; }
         public string HotUpdateDllName { get; set; }
         public List<string> AOTMetaAssemblyNames { get; set; }
     }
