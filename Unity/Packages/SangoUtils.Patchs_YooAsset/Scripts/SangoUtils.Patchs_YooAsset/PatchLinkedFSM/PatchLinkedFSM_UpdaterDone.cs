@@ -37,7 +37,7 @@ namespace SangoUtils.Patchs_YooAsset
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
             var CanvasTransform = GameObject.Find("Canvas").transform; //根据实际情况修改
             GameObject hotFixRoot = asset1.InstantiateSync();
-            hotFixRoot.transform.parent = CanvasTransform;
+            hotFixRoot.transform.SetParent(CanvasTransform);
             hotFixRoot.transform.position = Vector3.zero;
             hotFixRoot.transform.localScale = Vector3.one;
             RectTransform rect = hotFixRoot.GetComponent<RectTransform>();
