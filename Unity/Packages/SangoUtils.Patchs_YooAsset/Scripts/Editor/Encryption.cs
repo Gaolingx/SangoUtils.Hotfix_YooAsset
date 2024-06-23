@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using YooAsset;
+using SangoUtils.Patchs_YooAsset;
 
 /// <summary>
 /// 文件偏移加密方式
