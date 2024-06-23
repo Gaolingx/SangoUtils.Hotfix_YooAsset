@@ -29,7 +29,7 @@ namespace SangoUtils.Patchs_YooAsset
             if (downloader.TotalDownloadCount == 0)
             {
                 Debug.Log("Not found any download files !");
-                _fsmLinkedStater.InvokeTargetStaterItem<PatchLinkedFSM_UpdaterDone>();
+                _fsmLinkedStater.InvokeTargetStaterItem<PatchLinkedFSM_ClearPackageCache>();
             }
             else
             {
