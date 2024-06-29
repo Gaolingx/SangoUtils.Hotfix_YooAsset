@@ -10,8 +10,6 @@ public class HotFixService : MonoBehaviour
 {
     public static HotFixService Instance { get; private set; }
 
-    public SangoPatchRoot sangoPatchRoot;
-
     public void InitService()
     {
         Instance = this;
@@ -20,12 +18,13 @@ public class HotFixService : MonoBehaviour
 
     private void InitPatchService()
     {
-        if (sangoPatchRoot != null)
+        if (GetComponent<SangoPatchRoot>() == null)
         {
-            PatchService.Instance.SetConfig(GetPatchConfig());
-            sangoPatchRoot.OnInit();
-            PatchService.Instance.Initialize();
+            this.gameObject.AddComponent<SangoPatchRoot>();
         }
+        PatchService.Instance.SetConfig(GetPatchConfig());
+        GetComponent<SangoPatchRoot>().OnInit();
+        PatchService.Instance.Initialize();
     }
 
     private PatchConfig GetPatchConfig()

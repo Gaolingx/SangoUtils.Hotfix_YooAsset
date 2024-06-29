@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(HotFixService))]
 public class Boot : MonoBehaviour
 {
     public static Boot Instance { get; private set; }
