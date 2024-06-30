@@ -43,6 +43,16 @@ public class UIController : MonoBehaviour
         set => vSyncSettings = value;
     }
 
+    private void Awake()
+    {
+        Debug.Log("UIController Init Done.");
+
+        Application.targetFrameRate = m_FrameRate;
+        Time.timeScale = m_GameSpeed;
+        Application.runInBackground = m_RunInBackground;
+        Screen.sleepTimeout = m_NeverSleep ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
+    }
+
     private void Start()
     {
         eventSystem = transform.Find(EventSystemGOName).GetComponent<EventSystem>();
@@ -164,6 +174,11 @@ public class UIController : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    private void OnApplicationQuit()
+    {
+        StopAllCoroutines();
     }
 
     //Common
