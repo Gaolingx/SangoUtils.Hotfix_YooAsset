@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 963007398}
   - component: {fileID: 963007396}
   - component: {fileID: 963007397}
+  - component: {fileID: 963007400}
   - component: {fileID: 963007395}
   m_Layer: 0
   m_Name: GameRoot
@@ -572,7 +573,7 @@ MonoBehaviour:
   AppVersion: v1.0
   PackageName: DefaultPackage
   AppendTimeTicks: 0
-  PlayMode: 2
+  PlayMode: 0
   BuildPipeline: 1
   GameRootObjectName: Assets/AssetBundles/Prefabs/RootPrefabs/HotFixRoot.prefab
   GameRootParentTransformName: Canvas
@@ -614,6 +615,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbcea01819f3d94ba5162624ad9c75f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &963007400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963007392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0948dad2a2dcfd843a7fd87b4e6af960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu: {fileID: 0}
+  touchZone: {fileID: 0}
+  _isPause: 0
+  _isInputEnable: 1
+  _isPressingEsc: 0
+  _isPressingAlt: 0
+  ShowCursorScene:
+  - GameRoot
+  - SceneLogin
+  - SceneLoading
+  EventSystemGOName: EventSystem
+  vSyncSettings: 0
+  m_FrameRate: 60
+  m_GameSpeed: 1
+  m_RunInBackground: 1
+  m_NeverSleep: 1
 --- !u!1 &1249269513
 GameObject:
   m_ObjectHideFlags: 0
