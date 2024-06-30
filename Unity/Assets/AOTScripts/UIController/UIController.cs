@@ -71,7 +71,6 @@ public class UIController : MonoBehaviour
             touchZone.gameObject.SetActive(true);
         }
 
-        Application.targetFrameRate = 60;
 #else
         if (touchZone != null)
         {
