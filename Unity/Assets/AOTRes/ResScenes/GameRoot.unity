@@ -573,7 +573,7 @@ MonoBehaviour:
   AppVersion: v1.0
   PackageName: DefaultPackage
   AppendTimeTicks: 0
-  PlayMode: 2
+  PlayMode: 0
   BuildPipeline: 1
   GameRootObjectName: Assets/AssetBundles/Prefabs/RootPrefabs/HotFixRoot.prefab
   GameRootParentTransformName: Canvas
@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec822973f861054ea6b648b1554ad6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDontDestroyOnLoad: 1
 --- !u!114 &963007399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,7 +639,7 @@ MonoBehaviour:
   - SceneLogin
   - SceneLoading
   EventSystemGOName: EventSystem
-  vSyncSettings: 0
+  m_vSyncSettings: 0
   m_FrameRate: 60
   m_GameSpeed: 1
   m_RunInBackground: 1

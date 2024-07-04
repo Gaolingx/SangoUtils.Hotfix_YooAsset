@@ -24,7 +24,7 @@ namespace SangoUtils.Patchs_YooAsset
             LoadMetadataForAOTAssemblies(AOTMetaAssemblyNames);
 
 #if !UNITY_EDITOR
-        System.Reflection.Assembly.Load(GetAssetData(HotDllName));
+            System.Reflection.Assembly.Load(GetAssetData(HotDllName));
 #endif
             LoadGameRootObject();
         }

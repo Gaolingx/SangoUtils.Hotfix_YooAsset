@@ -32,21 +32,33 @@ public class UIController : MonoBehaviour
 
     [SerializeField]
     private List<string> ShowCursorScene;
+
     [SerializeField]
     private string EventSystemGOName;
-    [SerializeField]
-    private int vSyncSettings;
 
-    public int VSyncSettings
-    {
-        get => vSyncSettings;
-        set => vSyncSettings = value;
-    }
+    [SerializeField]
+    private int m_vSyncSettings;
+
+    [SerializeField]
+    private int m_FrameRate = 60;
+
+    [SerializeField]
+    private float m_GameSpeed = 1f;
+
+    [SerializeField]
+    private bool m_RunInBackground = true;
+
+    [SerializeField]
+    private bool m_NeverSleep = true;
+
+    private float m_GameSpeedBeforePause = 1f;
+
 
     private void Awake()
     {
         Debug.Log("UIController Init Done.");
 
+        QualitySettings.vSyncCount = m_vSyncSettings;
         Application.targetFrameRate = m_FrameRate;
         Time.timeScale = m_GameSpeed;
         Application.runInBackground = m_RunInBackground;
@@ -83,7 +95,6 @@ public class UIController : MonoBehaviour
     bool alt = false;
     private void Update()
     {
-        OnValueChangedVSync(vSyncSettings);
 
         if (_esc != null)
         {
@@ -160,11 +171,6 @@ public class UIController : MonoBehaviour
 #endif
     }
 
-    private void OnValueChangedVSync(Int32 value)
-    {
-        QualitySettings.vSyncCount = value;
-    }
-
     public void OnClickExit()
     {
         Debug.Log("Exit");
@@ -180,21 +186,16 @@ public class UIController : MonoBehaviour
         StopAllCoroutines();
     }
 
-    //Common
+    // Common Settings
 
-    [SerializeField]
-    private int m_FrameRate = 60;
-
-    [SerializeField]
-    private float m_GameSpeed = 1f;
-
-    [SerializeField]
-    private bool m_RunInBackground = true;
-
-    [SerializeField]
-    private bool m_NeverSleep = true;
-
-    private float m_GameSpeedBeforePause = 1f;
+    /// <summary>
+    /// 获取或设置垂直同步。
+    /// </summary>
+    public int VSyncSettings
+    {
+        get => m_vSyncSettings;
+        set => QualitySettings.vSyncCount = m_vSyncSettings = value;
+    }
 
     /// <summary>
     /// 获取或设置游戏帧率。
