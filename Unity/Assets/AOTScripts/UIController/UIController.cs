@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
     private string EventSystemGOName;
 
     [SerializeField]
-    private int m_vSyncSettings;
+    private int m_vSyncSettings = 1;
 
     [SerializeField]
     private int m_FrameRate = 60;
@@ -124,8 +124,6 @@ public class UIController : MonoBehaviour
             _isPressingAlt = false;
         }
 
-        //Time.timeScale = _isPause ? 0.0f : 1.0f;
-        AudioListener.pause = _isPause;
         if (menu != null)
         {
             menu.gameObject.SetActive(_isPause);
@@ -162,28 +160,6 @@ public class UIController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         return currentScene != null ? currentScene.name : null;
-    }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-#if !UNITY_ANDROID
-        Cursor.lockState = CursorLockMode.Locked;
-#endif
-    }
-
-    public void OnClickExit()
-    {
-        Debug.Log("Exit");
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
-
-    private void OnApplicationQuit()
-    {
-        StopAllCoroutines();
     }
 
     // Common Settings
@@ -285,6 +261,28 @@ public class UIController : MonoBehaviour
         }
 
         GameSpeed = 1f;
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+#if !UNITY_ANDROID
+        Cursor.lockState = CursorLockMode.Locked;
+#endif
+    }
+
+    public void OnClickExit()
+    {
+        Debug.Log("Exit");
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    private void OnApplicationQuit()
+    {
+        StopAllCoroutines();
     }
 
 }
