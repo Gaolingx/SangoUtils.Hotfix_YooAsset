@@ -1,7 +1,7 @@
 {
   "name": "com.sangoutils.patchyooassetsystem",
   "displayName": "SangoUtils PatchYooAssetSystem",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "unity": "2022.3",
   "unityRelease": "0a10",
   "description": "The Patch System in Unity, which using YooAsset.",
@@ -11,6 +11,7 @@
   ],
   "dependencies": {
     "com.unity.textmeshpro": "3.0.6",
-    "com.tuyoogame.yooasset": "2.1.2"
+    "com.tuyoogame.yooasset": "2.1.2",
+    "com.code-philosophy.hybridclr": "6.1.0"
   }
 }
