@@ -7,35 +7,11 @@ using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    public class PatchService : MonoBehaviour
+    public class PatchService : Singleton<PatchService>
     {
-        private static PatchService _instance;
-
-        public static PatchService Instance
+        protected override void Awake()
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType(typeof(PatchService)) as PatchService;
-                    if (_instance == null)
-                    {
-                        GameObject gameObject = new GameObject("[" + typeof(PatchService).FullName + "]");
-                        _instance = gameObject.AddComponent<PatchService>();
-                        gameObject.hideFlags = HideFlags.HideInHierarchy;
-                        DontDestroyOnLoad(gameObject);
-                    }
-                }
-                return _instance;
-            }
-        }
-
-        private void Awake()
-        {
-            if (null != _instance && _instance != this)
-            {
-                Destroy(gameObject);
-            }
+            base.Awake();
         }
 
         private PatchConfig _currentPatchConfig;
