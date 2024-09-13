@@ -10,11 +10,12 @@ namespace SangoUtils.Patchs_YooAsset
 
         private event EventHandler<PatchSystemEventArgs> _onPatchSystemEventHandler;
 
-        private string SangoPatchWndPath = "Canvas/SangoPatchRoot/SangoPatchWnd";
+        private string _sangoPatchWndPath;
 
         public void OnInit()
         {
-            _sangoPatchWnd = transform.Find(SangoPatchWndPath).GetComponent<SangoPatchWnd>();
+            _sangoPatchWndPath = (string)_fsmLinkedStater.GetBlackboardValue("GameRootParentTransformName") + "/SangoPatchRoot/SangoPatchWnd";
+            _sangoPatchWnd = transform.Find(_sangoPatchWndPath).GetComponent<SangoPatchWnd>();
 
             EventBus_Patchs.SangoPatchRoot = this;
             _onPatchSystemEventHandler += C_OnPatchSystemEvent;
