@@ -19,7 +19,7 @@ namespace SangoUtils.Patchs_YooAsset
 
                         if (_instance == null)
                         {
-                            GameObject obj = new GameObject(typeof(T).Name);
+                            GameObject obj = new GameObject("[" + typeof(T).FullName + "]");
                             obj.hideFlags = HideFlags.DontSave;
                             // obj.hideFlags = HideFlags.HideAndDontSave;
                             _instance = (T)obj.AddComponent(typeof(T));

@@ -71,6 +71,7 @@ namespace SangoUtils.Patchs_YooAsset
             _fsmLinkedStater.SetBlackboardValue("HostServerIP", _currentPatchConfig.HostServerIP);
             _fsmLinkedStater.SetBlackboardValue("AppId", _currentPatchConfig.AppId);
             _fsmLinkedStater.SetBlackboardValue("AppVersion", _currentPatchConfig.AppVersion);
+            _fsmLinkedStater.SetBlackboardValue("HostServerToken", _currentPatchConfig.HostServerToken);
             _fsmLinkedStater.SetBlackboardValue("appendTimeTicks", _currentPatchConfig.appendTimeTicks);
             _fsmLinkedStater.SetBlackboardValue("GameRootObjectName", _currentPatchConfig.GameRootObjectName);
             _fsmLinkedStater.SetBlackboardValue("GameRootParentTransformName", _currentPatchConfig.GameRootParentTransformName);

@@ -90,25 +90,26 @@ namespace SangoUtils.Patchs_YooAsset
             string hostServerIP = (string)_fsmLinkedStater.GetBlackboardValue("HostServerIP");
             string appId = (string)_fsmLinkedStater.GetBlackboardValue("AppId");
             string appVersion = (string)_fsmLinkedStater.GetBlackboardValue("AppVersion");
+            string hostServerToken = (string)_fsmLinkedStater.GetBlackboardValue("HostServerToken");
 
 #if UNITY_EDITOR
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/Android/{appVersion}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/Android/{appVersion}{hostServerToken}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/IOS/{appVersion}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/IOS/{appVersion}{hostServerToken}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/WebGL/{appVersion}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/WebGL/{appVersion}{hostServerToken}";
             else
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/PC/{appVersion}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/PC/{appVersion}{hostServerToken}";
 #else
         if (Application.platform == RuntimePlatform.Android)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/Android/{appVersion}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/Android/{appVersion}{hostServerToken}";
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/IOS/{appVersion}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/IOS/{appVersion}{hostServerToken}";
         else if (Application.platform == RuntimePlatform.WebGLPlayer)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/WebGL/{appVersion}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/WebGL/{appVersion}{hostServerToken}";
         else
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/PC/{appVersion}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/PC/{appVersion}{hostServerToken}";
 #endif
         }
 
