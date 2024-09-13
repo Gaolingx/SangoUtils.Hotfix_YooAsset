@@ -30,6 +30,10 @@ namespace SangoUtils.Patchs_YooAsset
             _currentPatchConfig = patchConfig;
         }
 
+        public PatchConfig GetConfig()
+        {
+            return _currentPatchConfig;
+        }
 
         private IEnumerator StartOperation()
         {
