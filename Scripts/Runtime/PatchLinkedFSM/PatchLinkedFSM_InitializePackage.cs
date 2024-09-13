@@ -90,26 +90,25 @@ namespace SangoUtils.Patchs_YooAsset
             string hostServerIP = (string)_fsmLinkedStater.GetBlackboardValue("HostServerIP");
             string appId = (string)_fsmLinkedStater.GetBlackboardValue("AppId");
             string appVersion = (string)_fsmLinkedStater.GetBlackboardValue("AppVersion");
-            string hostServerToken = (string)_fsmLinkedStater.GetBlackboardValue("HostServerToken");
 
 #if UNITY_EDITOR
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/Android/{appVersion}{hostServerToken}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/Android/{appVersion}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/IOS/{appVersion}{hostServerToken}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/IOS/{appVersion}";
             else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/WebGL/{appVersion}{hostServerToken}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/WebGL/{appVersion}";
             else
-                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/PC/{appVersion}{hostServerToken}";
+                return $"{hostServerIP}/CDN/Editor/Unity/{appId}/Patch/PC/{appVersion}";
 #else
         if (Application.platform == RuntimePlatform.Android)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/Android/{appVersion}{hostServerToken}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/Android/{appVersion}";
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/IOS/{appVersion}{hostServerToken}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/IOS/{appVersion}";
         else if (Application.platform == RuntimePlatform.WebGLPlayer)
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/WebGL/{appVersion}{hostServerToken}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/WebGL/{appVersion}";
         else
-            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/PC/{appVersion}{hostServerToken}";
+            return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/PC/{appVersion}";
 #endif
         }
 
@@ -128,11 +127,13 @@ namespace SangoUtils.Patchs_YooAsset
             }
             string IRemoteServices.GetRemoteMainURL(string fileName)
             {
-                return $"{_defaultHostServer}/{fileName}";
+                string hostServerToken = (string)_fsmLinkedStater.GetBlackboardValue("HostServerToken");
+                return $"{_defaultHostServer}/{fileName}{hostServerToken}";
             }
             string IRemoteServices.GetRemoteFallbackURL(string fileName)
             {
-                return $"{_fallbackHostServer}/{fileName}";
+                string hostServerToken = (string)_fsmLinkedStater.GetBlackboardValue("HostServerToken");
+                return $"{_fallbackHostServer}/{fileName}{hostServerToken}";
             }
         }
 
