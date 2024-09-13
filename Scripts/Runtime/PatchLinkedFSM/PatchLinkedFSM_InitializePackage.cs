@@ -51,7 +51,7 @@ namespace SangoUtils.Patchs_YooAsset
                 var createParameters = new HostPlayModeParameters();
                 createParameters.DecryptionServices = new FileStreamDecryption();
                 createParameters.BuildinQueryServices = new GameQueryServices();
-                createParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+                createParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer, _fsmLinkedStater);
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
@@ -63,7 +63,7 @@ namespace SangoUtils.Patchs_YooAsset
                 var createParameters = new WebPlayModeParameters();
                 createParameters.DecryptionServices = new FileStreamDecryption();
                 createParameters.BuildinQueryServices = new GameQueryServices();
-                createParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+                createParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer, _fsmLinkedStater);
                 initializationOperation = package.InitializeAsync(createParameters);
             }
 
@@ -119,11 +119,13 @@ namespace SangoUtils.Patchs_YooAsset
         {
             private readonly string _defaultHostServer;
             private readonly string _fallbackHostServer;
+            private readonly FSMLinkedStater _fsmLinkedStater;
 
-            public RemoteServices(string defaultHostServer, string fallbackHostServer)
+            public RemoteServices(string defaultHostServer, string fallbackHostServer, FSMLinkedStater fsmLinkedStater)
             {
                 _defaultHostServer = defaultHostServer;
                 _fallbackHostServer = fallbackHostServer;
+                _fsmLinkedStater = fsmLinkedStater;
             }
             string IRemoteServices.GetRemoteMainURL(string fileName)
             {
