@@ -10,12 +10,20 @@ namespace SangoUtils.Patchs_YooAsset
 
         private event EventHandler<PatchSystemEventArgs> _onPatchSystemEventHandler;
 
-        private string _sangoPatchWndPath;
+        private class GetBlackboardValue : FSMStaterBase
+        {
+            private FSMLinkedStater _fsmLinkedStater;
+
+            public string GetPatchWndPath()
+            {
+                return (string)_fsmLinkedStater.GetBlackboardValue("GameRootParentTransformName") + "/SangoPatchRoot/SangoPatchWnd";
+            }
+        }
 
         public void OnInit()
         {
-            _sangoPatchWndPath = (string)_fsmLinkedStater.GetBlackboardValue("GameRootParentTransformName") + "/SangoPatchRoot/SangoPatchWnd";
-            _sangoPatchWnd = transform.Find(_sangoPatchWndPath).GetComponent<SangoPatchWnd>();
+            GetBlackboardValue blackboardValue = new GetBlackboardValue();
+            _sangoPatchWnd = transform.Find(blackboardValue.GetPatchWndPath()).GetComponent<SangoPatchWnd>();
 
             EventBus_Patchs.SangoPatchRoot = this;
             _onPatchSystemEventHandler += C_OnPatchSystemEvent;
