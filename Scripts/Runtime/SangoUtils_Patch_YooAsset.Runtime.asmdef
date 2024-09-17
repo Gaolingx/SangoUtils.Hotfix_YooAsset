@@ -1,5 +1,5 @@
 {
-    "name": "SangoUtils_Patch_YooAsset",
+    "name": "SangoUtils_Patch_YooAsset.Runtime",
     "rootNamespace": "",
     "references": [
         "GUID:e34a5702dd353724aa315fb8011f08c3",
