@@ -38,10 +38,8 @@ namespace SangoUtils.Patchs_YooAsset
             var package = YooAssets.GetPackage(packageName);
             var GameRootObject = EventBus_Patchs.PatchConfig.GameRootObjectName;
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
-            var CanvasTransform = GameObject.Find(EventBus_Patchs.PatchConfig.GameRootParentTransformName).transform;
-            GameObject hotFixRoot = asset1.InstantiateSync();
+            GameObject hotFixRoot = asset1.InstantiateSync(GameObject.Find(EventBus_Patchs.PatchConfig.GameRootParentTransformName).transform);
 
-            hotFixRoot.transform.SetParent(CanvasTransform, false);
             RectTransform rect = hotFixRoot.GetComponent<RectTransform>();
             rect.offsetMax = new Vector2(0, 0);
             rect.offsetMin = new Vector2(0, 0);
