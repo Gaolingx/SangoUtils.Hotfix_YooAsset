@@ -104,13 +104,13 @@ namespace SangoUtils.Patchs_YooAsset
                 return $"{hostServerIP}/CDN/Editor/Unity/{appID}/Patch/PC/{appVersion}";
 #else
 		if (Application.platform == RuntimePlatform.Android)
-			return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/Android/{appVersion}";
+			return $"{hostServerIP}/CDN/Online/Unity/{appID}/Patch/Android/{appVersion}";
 		else if (Application.platform == RuntimePlatform.IPhonePlayer)
-			return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/IOS/{appVersion}";
+			return $"{hostServerIP}/CDN/Online/Unity/{appID}/Patch/IOS/{appVersion}";
 		else if (Application.platform == RuntimePlatform.WebGLPlayer)
-			return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/WebGL/{appVersion}";
+			return $"{hostServerIP}/CDN/Online/Unity/{appID}/Patch/WebGL/{appVersion}";
 		else
-			return $"{hostServerIP}/CDN/Online/Unity/{appId}/Patch/PC/{appVersion}";
+			return $"{hostServerIP}/CDN/Online/Unity/{appID}/Patch/PC/{appVersion}";
 #endif
         }
 
