@@ -3,39 +3,16 @@ using UnityEngine;
 
 namespace SangoUtils.Patchs_YooAsset.Utils
 {
-    internal class CoroutineDriver : MonoBehaviour
+    internal class CoroutineDriver : Singleton<CoroutineDriver>
     {
-        internal static CoroutineDriver _driver;
-
-        internal static CoroutineDriver Driver
+        protected override void Awake()
         {
-            get
-            {
-                if (_driver == null)
-                {
-                    _driver = FindObjectOfType(typeof(CoroutineDriver)) as CoroutineDriver;
-                    if (null == _driver)
-                    {
-                        GameObject gameObject = new GameObject("[CoroutineDriver]");
-                        _driver = gameObject.AddComponent<CoroutineDriver>();
-                        DontDestroyOnLoad(gameObject);
-                    }
-                }
-                return _driver;
-            }
-        }
-
-        private void Awake()
-        {
-            if (null != _driver && _driver != this)
-            {
-                Destroy(gameObject);
-            }
+            base.Awake();
         }
 
         internal static Coroutine Run(IEnumerator target)
         {
-            return Driver.StartCoroutine(target);
+            return CoroutineDriver.Instance.StartCoroutine(target);
         }
     }
 }
