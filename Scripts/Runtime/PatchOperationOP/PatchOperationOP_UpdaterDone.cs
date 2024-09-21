@@ -27,7 +27,7 @@ namespace SangoUtils.Patchs_YooAsset
             LoadMetadataForAOTAssemblies(AOTMetaAssemblyNames);
 
 #if !UNITY_EDITOR
-            System.Reflection.Assembly.Load(GetAssetData(HotDllName));
+            LoadHotAssembly(HotDllList);
 #endif
             LoadGameRootObject();
         }
@@ -92,6 +92,15 @@ namespace SangoUtils.Patchs_YooAsset
                 Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. mode:{mode} return:{err}");
             }
         }
+
+        internal static void LoadHotAssembly(List<string> HotDllList)
+        {
+            for (int i = 0; i < HotDllList.Count; i++)
+            {
+                System.Reflection.Assembly.Load(GetAssetData(HotDllList[i]));
+            }
+        }
+
         #endregion
     }
 }
