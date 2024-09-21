@@ -31,9 +31,9 @@ namespace SangoUtils.Patchs_YooAsset
         [SerializeField]
         private string _gameRootObjectName;
         [SerializeField]
-        private string _gameRootParentTransformName;
+        private Transform _gameRootParentTransform;
         [SerializeField]
-        private string _hotUpdateDllName;
+        private List<string> _hotUpdateDllList;
         [SerializeField]
         private List<string> _AOTMetaAssemblyNames;
         [SerializeField]
@@ -51,8 +51,8 @@ namespace SangoUtils.Patchs_YooAsset
         public GameObject SangoPatchWnd { get => _sangoPatchWnd; }
 
         public string GameRootObjectName { get => _gameRootObjectName; }
-        public string GameRootParentTransformName { get => _gameRootParentTransformName; }
-        public string HotUpdateDllName { get => _hotUpdateDllName; }
+        public Transform GameRootParentTransform { get => _gameRootParentTransform; }
+        public List<string> HotUpdateDllList { get => _hotUpdateDllList; }
         public List<string> AOTMetaAssemblyNames { get => _AOTMetaAssemblyNames; }
 
         public UnityEvent OnUpdaterDone { get => _onUpdaterDone; }

@@ -20,10 +20,10 @@ namespace SangoUtils.Patchs_YooAsset
         #region EnterGameRoot
         internal void EnterSangoGameRoot()
         {
-            var HotDllName = EventBus_Patchs.PatchConfig.HotUpdateDllName;
+            var HotDllList = EventBus_Patchs.PatchConfig.HotUpdateDllList;
             var AOTMetaAssemblyNames = EventBus_Patchs.PatchConfig.AOTMetaAssemblyNames;
 
-            LoadDll(AOTMetaAssemblyNames, HotDllName);
+            LoadDll(AOTMetaAssemblyNames, HotDllList);
             LoadMetadataForAOTAssemblies(AOTMetaAssemblyNames);
 
 #if !UNITY_EDITOR
@@ -38,11 +38,14 @@ namespace SangoUtils.Patchs_YooAsset
             var package = YooAssets.GetPackage(packageName);
             var GameRootObject = EventBus_Patchs.PatchConfig.GameRootObjectName;
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
-            GameObject hotFixRoot = asset1.InstantiateSync(GameObject.Find(EventBus_Patchs.PatchConfig.GameRootParentTransformName).transform);
+            GameObject hotFixRoot = asset1.InstantiateSync(EventBus_Patchs.PatchConfig.GameRootParentTransform);
 
             RectTransform rect = hotFixRoot.GetComponent<RectTransform>();
-            rect.offsetMax = new Vector2(0, 0);
-            rect.offsetMin = new Vector2(0, 0);
+            if (rect != null)
+            {
+                rect.offsetMax = new Vector2(0, 0);
+                rect.offsetMin = new Vector2(0, 0);
+            }
         }
         #endregion
 
@@ -55,11 +58,11 @@ namespace SangoUtils.Patchs_YooAsset
         }
 
         #region LoadAssemblies
-        internal void LoadDll(List<string> AOTMetaAssemblyNames, string HotDllName)
+        internal void LoadDll(List<string> AOTMetaAssemblyNames, List<string> HotDllList)
         {
             var packageName = EventBus_Patchs.PatchConfig.PackageName;
 
-            var dllNameList = new List<string>() { HotDllName, }.Concat(AOTMetaAssemblyNames);
+            var dllNameList = new List<string>().Concat(AOTMetaAssemblyNames).Concat(HotDllList);
             foreach (var dllName in dllNameList)
             {
                 byte[] fileData = SangoAssetService.Instance.LoadTextAsset(packageName, dllName, true).bytes;
