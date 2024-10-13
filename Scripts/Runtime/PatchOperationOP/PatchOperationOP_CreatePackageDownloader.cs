@@ -23,7 +23,8 @@ namespace SangoUtils.Patchs_YooAsset
             var package = YooAssets.GetPackage(packageName);
             int downloadingMaxNum = 10;
             int failedTryAgain = 3;
-            var downloader = package.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
+            var timeout = EventBus_Patchs.PatchConfig.Timeout;
+            var downloader = package.CreateResourceDownloader(downloadingMaxNum, failedTryAgain, timeout);
 
             EventBus_Patchs.PatchConfig.ResourceDownloaderOperation = downloader;
 
