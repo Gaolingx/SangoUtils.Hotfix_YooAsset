@@ -71,9 +71,7 @@ namespace SangoUtils.Patchs_YooAsset
             }
             else
             {
-                var version = package.GetPackageVersion();
-                Debug.Log($"Init resource package version : {version}");
-
+                Debug.Log($"Init resource package version : {initializationOperation?.PackageVersion}");
                 EventBus_Patchs.PatchOperation.SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdatePackageVersion));
             }
         }
