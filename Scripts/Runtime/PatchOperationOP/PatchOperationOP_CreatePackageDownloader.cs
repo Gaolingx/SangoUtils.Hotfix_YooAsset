@@ -31,7 +31,7 @@ namespace SangoUtils.Patchs_YooAsset
             if (downloader.TotalDownloadCount == 0)
             {
                 Debug.Log("Not found any download files !");
-                EventBus_Patchs.PatchOperation.SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdaterDone));
+                EventBus_Patchs.PatchOperation.SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.ClearPackageCache));
             }
             else
             {
