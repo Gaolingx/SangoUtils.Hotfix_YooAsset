@@ -5,59 +5,26 @@ using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    internal class SangoPatchConfig : MonoBehaviour
+    public class SangoPatchConfig
     {
-        //The CDN PathDef as following, you can change it in PatchOperationOP_InitializePackage.GetHostServerURL()
-        [SerializeField]
-        [Tooltip("{hostServerIP}/CDN/Editor/Unity/{appID}/Patch/PC/{appVersion}")]
-        private string _hostServerIP = "https://";
-        [SerializeField]
-        private string _appID;
-        [SerializeField]
-        private string _appVersion;
-        [SerializeField]
-        private bool _appendTimeTicks = true;
-        [SerializeField]
-        private int _timeout = 60;
-        [SerializeField]
-        private string _packageName = "DefaultPackage";
-        [SerializeField]
-        private EPlayMode _playMode = EPlayMode.HostPlayMode;
-        [SerializeField]
-        private EDefaultBuildPipeline _buildPipeline = EDefaultBuildPipeline.BuiltinBuildPipeline;
-        [SerializeField]
-        private GameObject _sangoPatchWnd;
+        public string HostServerIP { get; set; }
+        public string AppID { get; set; }
+        public string AppVersion { get; set; }
+        public bool AppendTimeTicks { get; set; }
+        public int Timeout { get; set; }
+        public int DownloadingMaxNum { get; set; }
+        public int FailedTryAgain { get; set; }
 
-        [SerializeField]
-        private string _gameRootObjectName;
-        [SerializeField]
-        private Transform _gameRootParentTransform;
-        [SerializeField]
-        private List<string> _hotUpdateDllList;
-        [SerializeField]
-        private List<string> _AOTMetaAssemblyNames;
-        [SerializeField]
-        private UnityEvent _onUpdaterDone;
+        public string PackageName { get; set; }
+        public EPlayMode PlayMode { get; set; }
+        public EDefaultBuildPipeline BuildPipeline { get; set; }
 
+        public GameObject SangoPatchWnd { get; set; }
+        public string GameRootObjectName { get; set; }
+        public Transform GameRootParentTransform { get; set; }
+        public List<string> HotUpdateDllList { get; set; }
+        public List<string> AOTMetaAssemblyNames { get; set; }
 
-        public string HostServerIP { get => _hostServerIP; }
-        public string AppID { get => _appID; }
-        public string AppVersion { get => _appVersion; }
-        public bool AppendTimeTicks { get => _appendTimeTicks; }
-        public int Timeout { get => _timeout; }
-        public string PackageName { get => _packageName; }
-        public EPlayMode PlayMode { get => _playMode; }
-        public EDefaultBuildPipeline BuildPipeline { get => _buildPipeline; }
-        public GameObject SangoPatchWnd { get => _sangoPatchWnd; }
-
-        public string GameRootObjectName { get => _gameRootObjectName; }
-        public Transform GameRootParentTransform { get => _gameRootParentTransform; }
-        public List<string> HotUpdateDllList { get => _hotUpdateDllList; }
-        public List<string> AOTMetaAssemblyNames { get => _AOTMetaAssemblyNames; }
-
-        public UnityEvent OnUpdaterDone { get => _onUpdaterDone; }
-
-        internal string PackageVersion { get; set; }
-        internal ResourceDownloaderOperation ResourceDownloaderOperation { get; set; }
+        public UnityEvent OnUpdaterDone { get; set; }
     }
 }

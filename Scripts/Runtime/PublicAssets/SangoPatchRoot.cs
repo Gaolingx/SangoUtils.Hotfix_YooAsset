@@ -1,64 +1,59 @@
 using SangoUtils.Patchs_YooAsset.Utils;
 using System;
-using System.Collections;
 using UnityEngine;
-using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    [RequireComponent(typeof(SangoPatchConfig))]
-    internal class SangoPatchRoot : MonoBehaviour
+    public class SangoPatchRoot : MonoBehaviour
     {
         private SangoPatchWnd _sangoPatchWnd;
 
-        private void Awake()
+        private event EventHandler<PatchSystemEventArgs> _onPatchSystemEventHandler;
+        private event EventHandler<PatchSystem_DownloadProgressUpdateEventArgs> _onPatchSystemDownloadProgressUpdateEventHandler;
+
+        public void Initialize(SangoPatchConfig config)
         {
-            new EventBus_Patchs();
+            PatchService.Instance.Initialize(config);
+            OnInit(config);
+        }
 
-            EventBus_Patchs.PatchConfig = GetComponent<SangoPatchConfig>();
+        private void OnInit(SangoPatchConfig patchConfig)
+        {
+            //_sangoPatchWnd = transform.Find("SangoPatchWnd").GetComponent<SangoPatchWnd>();
 
-            GameObject patchWnd = Instantiate(EventBus_Patchs.PatchConfig.SangoPatchWnd, new Vector3(0, 0, 0), Quaternion.identity, EventBus_Patchs.PatchConfig.GameRootParentTransform);
+            GameObject patchWnd = Instantiate(patchConfig.SangoPatchWnd, new Vector3(0, 0, 0), Quaternion.identity, patchConfig.GameRootParentTransform);
             patchWnd.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
             patchWnd.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
 
             _sangoPatchWnd = patchWnd.AddComponent<SangoPatchWnd>();
 
-            EventBus_Patchs.AddPatchSystemEvent(_OnPatchSystemEvent);
-            EventBus_Patchs.AddPatchSystem_DownloadProgressUpdateEvent(_OnPatchSystemDownloadProgressUpdateEvent);
+            EventBus_Patchs.SangoPatchRoot = this;
+            _onPatchSystemEventHandler += C_OnPatchSystemEvent;
+            _onPatchSystemDownloadProgressUpdateEventHandler += C_OnPatchSystemDownloadProgressUpdateEvent;
 
             _sangoPatchWnd.SetRoot(this);
-        }
-
-        private void Start()
-        {
-            _StartOperationASync().Start();
-
             _sangoPatchWnd.gameObject.SetActive(true);
             _sangoPatchWnd.Initialize();
         }
 
-        private IEnumerator _StartOperationASync()
+        internal void SendMessage(object sender, PatchSystemEventArgs eventArgs)
         {
-            YooAssets.Initialize();
-
-            PatchOperation hotFixOperation = new();
-            YooAssets.StartOperation(hotFixOperation);
-            yield return hotFixOperation;
-
-            ResourcePackage assetPackage = YooAssets.GetPackage(EventBus_Patchs.PatchConfig.PackageName);
-            YooAssets.SetDefaultPackage(assetPackage);
-
-            EventBus_Patchs.CallPatchSystemEvent(this, new PatchSystemEventArgs(PatchSystemEventCode.ClosePatchWindow));
+            _onPatchSystemEventHandler?.Invoke(sender, eventArgs);
         }
 
-        private void _OnPatchSystemEvent(object sender, PatchSystemEventArgs eventArgs)
+        internal void SendMessage(object sender, PatchSystem_DownloadProgressUpdateEventArgs eventArgs)
+        {
+            _onPatchSystemDownloadProgressUpdateEventHandler?.Invoke(sender, eventArgs);
+        }
+
+        private void C_OnPatchSystemEvent(object sender, PatchSystemEventArgs eventArgs)
         {
             switch (eventArgs.PatchSystemEventCode)
             {
                 case PatchSystemEventCode.InitializeFailed:
                     Action callback = delegate
                     {
-                        EventBus_Patchs.CallPatchUserEvent(this, new PatchUserEventArgs(PatchUserEventCode.UserTryInitialize));
+                        EventBus_Patchs.PatchOperation.SendMessage(this, new PatchUserEventArgs(PatchUserEventCode.UserTryInitialize));
                     };
                     _sangoPatchWnd.ShowMessageBox($"Failed to initialize package !", callback);
                     break;
@@ -71,7 +66,7 @@ namespace SangoUtils.Patchs_YooAsset
                     long totalSizeBytes = long.Parse(eventArgs.ExtensionData[1].ToString());
                     Action callback1 = delegate
                     {
-                        EventBus_Patchs.CallPatchUserEvent(this, new PatchUserEventArgs(PatchUserEventCode.UserBeginDownloadWebFiles));
+                        EventBus_Patchs.PatchOperation.SendMessage(this, new PatchUserEventArgs(PatchUserEventCode.UserBeginDownloadWebFiles));
                     };
                     float sizeMB = totalSizeBytes / 1048576f;
                     sizeMB = Mathf.Clamp(sizeMB, 0.1f, float.MaxValue);
@@ -81,14 +76,14 @@ namespace SangoUtils.Patchs_YooAsset
                 case PatchSystemEventCode.PackageVersionUpdateFailed:
                     Action callback2 = delegate
                     {
-                        EventBus_Patchs.CallPatchUserEvent(this, new PatchUserEventArgs(PatchUserEventCode.UserTryUpdatePackageVersion));
+                        EventBus_Patchs.PatchOperation.SendMessage(this, new PatchUserEventArgs(PatchUserEventCode.UserTryUpdatePackageVersion));
                     };
                     _sangoPatchWnd.ShowMessageBox($"Failed to update static version, please check the network status.", callback2);
                     break;
                 case PatchSystemEventCode.PatchManifestUpdateFailed:
                     Action callback3 = delegate
                     {
-                        EventBus_Patchs.CallPatchUserEvent(this, new PatchUserEventArgs(PatchUserEventCode.UserTryUpdatePatchManifest));
+                        EventBus_Patchs.PatchOperation.SendMessage(this, new PatchUserEventArgs(PatchUserEventCode.UserTryUpdatePatchManifest));
                     };
                     _sangoPatchWnd.ShowMessageBox($"Failed to update patch manifest, please check the network status.", callback3);
                     break;
@@ -97,7 +92,7 @@ namespace SangoUtils.Patchs_YooAsset
                     string Error = eventArgs.ExtensionData[1].ToString();
                     Action callback4 = delegate
                     {
-                        EventBus_Patchs.CallPatchUserEvent(this, new PatchUserEventArgs(PatchUserEventCode.UserTryDownloadWebFiles));
+                        EventBus_Patchs.PatchOperation.SendMessage(this, new PatchUserEventArgs(PatchUserEventCode.UserTryDownloadWebFiles));
                     };
                     _sangoPatchWnd.ShowMessageBox($"Failed to download file : {fileName}", callback4);
                     break;
@@ -107,7 +102,7 @@ namespace SangoUtils.Patchs_YooAsset
             }
         }
 
-        private void _OnPatchSystemDownloadProgressUpdateEvent(object sender, PatchSystem_DownloadProgressUpdateEventArgs eventArgs)
+        private void C_OnPatchSystemDownloadProgressUpdateEvent(object sender, PatchSystem_DownloadProgressUpdateEventArgs eventArgs)
         {
             int totalDownloadCount = eventArgs.TotalDownloadCount;
             int currentDownloadCount = eventArgs.CurrentDownloadCount;

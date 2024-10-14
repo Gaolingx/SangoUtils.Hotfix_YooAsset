@@ -11,18 +11,18 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.CallPatchSystemEvent(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "更新资源清单！"));
-            _UpdateManifestASync().Start();
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "更新资源清单！"));
+            UpdateManifest().Start();
         }
 
-        private IEnumerator _UpdateManifestASync()
+        private IEnumerator UpdateManifest()
         {
             yield return new WaitForSecondsRealtime(0.5f);
 
-            var packageName = EventBus_Patchs.PatchConfig.PackageName;
-            var packageVersion = EventBus_Patchs.PatchConfig.PackageVersion;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var packageVersion = EventBus_Patchs.PatchOperation.PatchOperationData.PackageVersion;
+            var timeout = EventBus_Patchs.PatchOperation.PatchOperationData.Timeout;
             var package = YooAssets.GetPackage(packageName);
-            var timeout = EventBus_Patchs.PatchConfig.Timeout;
             bool savePackageVersion = true;
             var operation = package.UpdatePackageManifestAsync(packageVersion, savePackageVersion, timeout);
             yield return operation;
@@ -30,12 +30,12 @@ namespace SangoUtils.Patchs_YooAsset
             if (operation.Status != EOperationStatus.Succeed)
             {
                 Debug.LogWarning(operation.Error);
-                EventBus_Patchs.CallPatchSystemEvent(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchManifestUpdateFailed));
+                EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchManifestUpdateFailed));
                 yield break;
             }
             else
             {
-                EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.CreatePackageDownloader));
+                EventBus_Patchs.PatchOperation.SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.CreatePackageDownloader));
             }
         }
     }

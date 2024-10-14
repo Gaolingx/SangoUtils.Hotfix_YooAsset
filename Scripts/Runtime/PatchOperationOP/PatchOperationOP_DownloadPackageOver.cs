@@ -8,7 +8,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.ClearPackageCache));
+            EventBus_Patchs.PatchOperation.SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.ClearPackageCache));
         }
     }
 }

@@ -6,13 +6,35 @@ using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    public class SangoAssetService : Singleton<SangoAssetService>
+    public class SangoAssetService : MonoBehaviour
     {
-        protected override void Awake()
-        {
-            base.Awake();
+        private static SangoAssetService _instance;
 
-            Initialize();
+        public static SangoAssetService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType(typeof(SangoAssetService)) as SangoAssetService;
+                    if (_instance == null)
+                    {
+                        GameObject gameObject = new GameObject("[" + typeof(SangoAssetService).FullName + "]");
+                        _instance = gameObject.AddComponent<SangoAssetService>();
+                        gameObject.hideFlags = HideFlags.HideInHierarchy;
+                        DontDestroyOnLoad(gameObject);
+                    }
+                }
+                return _instance;
+            }
+        }
+
+        private void Awake()
+        {
+            if (null != _instance && _instance != this)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private List<AssetHandle> _cacheAssetHandles = new();

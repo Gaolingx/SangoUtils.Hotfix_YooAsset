@@ -7,64 +7,102 @@ namespace SangoUtils.Patchs_YooAsset
 {
     internal class PatchOperation : GameAsyncOperation
     {
-        private readonly Dictionary<PatchOperationEventCode, PatchOperationOP_Base> _patchOperationOPs = new();
-        private void AddPatchOperationOP<T>() where T : PatchOperationOP_Base, new()
+        private readonly SangoPatchConfig _currentPatchConfig;
+
+        private event EventHandler<PatchUserEventArgs> _onPatchUserEventHandler;
+        private event EventHandler<PatchOperationEventArgs> _onPatchOperationEventHandler;
+
+        internal PatchOperationData PatchOperationData { get; set; }
+
+        private readonly Dictionary<PatchOperationEventCode, PatchOperationOP_Base> _patchOperationOPs = new Dictionary<PatchOperationEventCode, PatchOperationOP_Base>();
+
+        internal PatchOperation(SangoPatchConfig patchConfig)
         {
-            var patchOperationOP = Activator.CreateInstance<T>();
-            _patchOperationOPs.Add(patchOperationOP.PatchOperationEventCode, patchOperationOP);
+            _currentPatchConfig = patchConfig;
+            EventBus_Patchs.PatchOperation = this;
+            _onPatchUserEventHandler += C_OnPatchUserEvent;
+            _onPatchOperationEventHandler += C_OnPatchOperationEvent;
+            AddPatchOperationOPs();
         }
 
-        internal PatchOperation()
+        internal void SendMessage(object sender, PatchUserEventArgs eventArgs)
         {
-            EventBus_Patchs.AddPatchUserEvent(_OnPatchUserEvent);
-            EventBus_Patchs.AddPatchOperationEvent(_OnPatchOperationEvent);
-            _AddPatchOperationOPs();
+            _onPatchUserEventHandler?.Invoke(sender, eventArgs);
+        }
+
+        internal void SendMessage(object sender, PatchOperationEventArgs eventArgs)
+        {
+            _onPatchOperationEventHandler?.Invoke(sender, eventArgs);
         }
 
         protected override void OnStart()
         {
-            EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.InitializePackage));
+            SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.InitializePackage));
         }
 
         protected override void OnUpdate() { }
 
         protected override void OnAbort() { }
 
-        private void _AddPatchOperationOPs()
+        private void AddPatchOperationOPs()
         {
-            AddPatchOperationOP<PatchOperationOP_InitializePackage>();
-            AddPatchOperationOP<PatchOperationOP_UpdatePackageVersion>();
-            AddPatchOperationOP<PatchOperationOP_UpdatePackageManifest>();
-            AddPatchOperationOP<PatchOperationOP_CreatePackageDownloader>();
-            AddPatchOperationOP<PatchOperationOP_DownloadPackageFiles>();
-            AddPatchOperationOP<PatchOperationOP_DownloadPackageOver>();
-            AddPatchOperationOP<PatchOperationOP_ClearPackageCache>();
-            AddPatchOperationOP<PatchOperationOP_UpdaterDone>();
+            Add<PatchOperationOP_InitializePackage>();
+            Add<PatchOperationOP_UpdatePackageVersion>();
+            Add<PatchOperationOP_UpdatePackageManifest>();
+            Add<PatchOperationOP_CreatePackageDownloader>();
+            Add<PatchOperationOP_DownloadPackageFiles>();
+            Add<PatchOperationOP_DownloadPackageOver>();
+            Add<PatchOperationOP_ClearPackageCache>();
+            Add<PatchOperationOP_UpdateLoadHotfixDll>();
+            Add<PatchOperationOP_UpdaterDone>();
+
+            PatchOperationData = new(_currentPatchConfig.PackageName,
+                _currentPatchConfig.PlayMode,
+                _currentPatchConfig.BuildPipeline.ToString(),
+                _currentPatchConfig.HostServerIP,
+                _currentPatchConfig.AppID,
+                _currentPatchConfig.AppVersion,
+                _currentPatchConfig.AppendTimeTicks,
+                _currentPatchConfig.Timeout,
+                _currentPatchConfig.DownloadingMaxNum,
+                _currentPatchConfig.FailedTryAgain,
+                _currentPatchConfig.SangoPatchWnd,
+                _currentPatchConfig.GameRootObjectName,
+                _currentPatchConfig.GameRootParentTransform,
+                _currentPatchConfig.HotUpdateDllList,
+                _currentPatchConfig.AOTMetaAssemblyNames,
+                _currentPatchConfig.OnUpdaterDone);
+
+            void Add<T>() where T : PatchOperationOP_Base
+            {
+                T patchOperation = Activator.CreateInstance<T>();
+                _patchOperationOPs.Add(patchOperation.PatchOperationEventCode, patchOperation);
+            }
         }
 
-        private void _OnPatchUserEvent(object sender, PatchUserEventArgs eventArgs)
+        private void C_OnPatchUserEvent(object sender, PatchUserEventArgs eventArgs)
         {
             switch (eventArgs.PatchUserEventCode)
             {
                 case PatchUserEventCode.UserTryInitialize:
-                    EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.InitializePackage));
+                    SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.InitializePackage));
                     break;
                 case PatchUserEventCode.UserBeginDownloadWebFiles:
-                    EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.DownloadPackageFiles));
+                    SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.DownloadPackageFiles));
                     break;
                 case PatchUserEventCode.UserTryUpdatePackageVersion:
-                    EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdatePackageVersion));
+                    SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdatePackageVersion));
                     break;
                 case PatchUserEventCode.UserTryUpdatePatchManifest:
-                    EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdatePackageManifest));
+                    SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.UpdatePackageManifest));
                     break;
                 case PatchUserEventCode.UserTryDownloadWebFiles:
-                    EventBus_Patchs.CallPatchOperationEvent(this, new PatchOperationEventArgs(PatchOperationEventCode.CreatePackageDownloader));
+                    SendMessage(this, new PatchOperationEventArgs(PatchOperationEventCode.CreatePackageDownloader));
                     break;
             }
         }
 
-        private void _OnPatchOperationEvent(object sender, PatchOperationEventArgs eventArgs)
+        private void C_OnPatchOperationEvent(object sender, PatchOperationEventArgs eventArgs)
         {
             if (_patchOperationOPs.TryGetValue(eventArgs.PatchOperationEventCode, out var patchOperationOP))
             {
@@ -72,8 +110,7 @@ namespace SangoUtils.Patchs_YooAsset
             }
             if (eventArgs.PatchOperationEventCode == PatchOperationEventCode.UpdaterDone)
             {
-                EventBus_Patchs.RemovePatchOperationEvent(_OnPatchOperationEvent);
-                EventBus_Patchs.RemovePatchUserEvent(_OnPatchUserEvent);
+                _onPatchUserEventHandler = null;
                 Status = EOperationStatus.Succeed;
             }
         }
