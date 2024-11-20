@@ -19,7 +19,7 @@ namespace SangoUtils.Patchs_YooAsset
         {
             yield return new WaitForSecondsRealtime(0.5f);
 
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.BuildPipeline.ToString();
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
             var package = YooAssets.GetPackage(packageName);
             int downloadingMaxNum = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.DownloadingMaxNum;
             int failedTryAgain = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.FailedTryAgain;
