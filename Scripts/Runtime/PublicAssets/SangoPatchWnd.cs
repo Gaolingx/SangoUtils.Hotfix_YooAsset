@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +43,7 @@ namespace SangoUtils.Patchs_YooAsset
             _loadingProgressPoint.transform.localPosition = new Vector3(-_loadingProgressFGWidth / 2, _loadingProgressPointYPos, 0);
             
             _messageBoxTrans.gameObject.SetActive(false);
-            _tips.SetText("»¶Ó­Ê¹ÓÃÈÈ¸üĞÂÏµÍ³");
+            _tips.SetText("æ¬¢è¿ä½¿ç”¨çƒ­æ›´æ–°ç³»ç»Ÿ");
         }
 
         internal void SetRoot(SangoPatchRoot root)
@@ -84,7 +84,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         private void OnMessageBoxCancelBtnClicked()
         {
-            _messageBoxContent.SetText("ÔÚ²âÊÔ·şÖĞ£¬È¡Ïû»áÎŞ·¨½øÈëÓÎÏ·µÄÅ¶");
+            _messageBoxContent.SetText("åœ¨æµ‹è¯•æœä¸­ï¼Œå–æ¶ˆä¼šæ— æ³•è¿›å…¥æ¸¸æˆçš„å“¦");
         }
     }
 }

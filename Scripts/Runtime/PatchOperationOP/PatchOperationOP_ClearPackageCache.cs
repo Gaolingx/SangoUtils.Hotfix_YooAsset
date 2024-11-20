@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+ï»¿using SangoUtils.Patchs_YooAsset.Utils;
 using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
@@ -9,8 +9,8 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "ÇåÀíÎ´Ê¹ÓÃµÄ»º´æÎÄ¼ş£¡"));
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "æ¸…ç†æœªä½¿ç”¨çš„ç¼“å­˜æ–‡ä»¶ï¼"));
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
             var package = YooAssets.GetPackage(packageName);
             var operation = package.ClearUnusedCacheFilesAsync();
             operation.Completed += Operation_Completed;

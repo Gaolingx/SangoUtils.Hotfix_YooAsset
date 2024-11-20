@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+锘縰sing SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections;
 using YooAsset;
 
@@ -10,7 +10,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "开始下载补丁文件！"));
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "寮�濮嬩笅杞借ˉ涓佹枃浠讹紒"));
             BeginDownload().Start();
         }
 

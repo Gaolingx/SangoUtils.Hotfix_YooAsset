@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+Ôªøusing SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections;
 using UnityEngine;
 using YooAsset;
@@ -11,7 +11,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "∏¸–¬◊ ‘¥«Âµ•£°"));
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "Êõ¥Êñ∞ËµÑÊ∫êÊ∏ÖÂçïÔºÅ"));
             UpdateManifest().Start();
         }
 
@@ -19,9 +19,9 @@ namespace SangoUtils.Patchs_YooAsset
         {
             yield return new WaitForSecondsRealtime(0.5f);
 
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
             var packageVersion = EventBus_Patchs.PatchOperation.PatchOperationData.PackageVersion;
-            var timeout = EventBus_Patchs.PatchOperation.PatchOperationData.Timeout;
+            var timeout = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.Timeout;
             var package = YooAssets.GetPackage(packageName);
             bool savePackageVersion = true;
             var operation = package.UpdatePackageManifestAsync(packageVersion, savePackageVersion, timeout);

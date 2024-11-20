@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+﻿using SangoUtils.Patchs_YooAsset.Utils;
 
 namespace SangoUtils.Patchs_YooAsset
 {

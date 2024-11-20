@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+﻿using SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -17,9 +17,9 @@ namespace SangoUtils.Patchs_YooAsset
 
         private IEnumerator InitPackage()
         {
-            EPlayMode playMode = EventBus_Patchs.PatchOperation.PatchOperationData.PlayMode;
-            string packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
-            string buildPipeline = EventBus_Patchs.PatchOperation.PatchOperationData.BuildPipline;
+            EPlayMode playMode = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PlayMode;
+            string packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
+            string buildPipeline = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.BuildPipeline.ToString();
 
             var package = YooAssets.TryGetPackage(packageName);
             if (package == null)
@@ -78,9 +78,9 @@ namespace SangoUtils.Patchs_YooAsset
 
         private string GetHostServerURL()
         {
-            string hostServerIP = EventBus_Patchs.PatchOperation.PatchOperationData.HostServerIP;
-            string appID = EventBus_Patchs.PatchOperation.PatchOperationData.AppID;
-            string appVersion = EventBus_Patchs.PatchOperation.PatchOperationData.AppVersion;
+            string hostServerIP = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.HostServerIP;
+            string appID = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.AppID;
+            string appVersion = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.AppVersion;
 
 #if UNITY_EDITOR
             if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)

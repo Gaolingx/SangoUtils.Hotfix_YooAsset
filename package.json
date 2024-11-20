@@ -1,7 +1,7 @@
 {
   "name": "com.sangoutils.patchyooassetsystem",
   "displayName": "SangoUtils PatchYooAssetSystem",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "unity": "2022.3",
   "unityRelease": "0a10",
   "description": "The Patch System in Unity, which using YooAsset.",

@@ -1,4 +1,4 @@
-using HybridCLR;
+ï»¿using HybridCLR;
 using SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +20,8 @@ namespace SangoUtils.Patchs_YooAsset
         #region EnterGameRoot
         internal void EnterSangoGameRoot()
         {
-            var HotDllList = EventBus_Patchs.PatchOperation.PatchOperationData.HotUpdateDllList;
-            var AOTMetaAssemblyNames = EventBus_Patchs.PatchOperation.PatchOperationData.AOTMetaAssemblyNames;
+            var HotDllList = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.HotUpdateDllList;
+            var AOTMetaAssemblyNames = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.AOTMetaAssemblyNames;
 
             LoadDll(AOTMetaAssemblyNames, HotDllList);
             LoadMetadataForAOTAssemblies(AOTMetaAssemblyNames);
@@ -34,7 +34,7 @@ namespace SangoUtils.Patchs_YooAsset
         #endregion
 
 
-        //»ñÈ¡×ÊÔ´¶ş½øÖÆ
+        //è·å–èµ„æºäºŒè¿›åˆ¶
         private static Dictionary<string, byte[]> _dllAssetDataDict = new Dictionary<string, byte[]>();
         private static byte[] GetAssetData(string dllName)
         {
@@ -44,7 +44,7 @@ namespace SangoUtils.Patchs_YooAsset
         #region LoadAssemblies
         internal void LoadDll(List<string> AOTMetaAssemblyNames, List<string> HotDllList)
         {
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
 
             var dllNameList = new List<string>().Concat(AOTMetaAssemblyNames).Concat(HotDllList);
             foreach (var dllName in dllNameList)
@@ -56,22 +56,22 @@ namespace SangoUtils.Patchs_YooAsset
         }
 
         /// <summary>
-        /// Îªaot assembly¼ÓÔØÔ­Ê¼metadata£¬ Õâ¸ö´úÂë·Åaot»òÕßÈÈ¸üĞÂ¶¼ĞĞ¡£
-        /// Ò»µ©¼ÓÔØºó£¬Èç¹ûAOT·ºĞÍº¯Êı¶ÔÓ¦nativeÊµÏÖ²»´æÔÚ£¬Ôò×Ô¶¯Ìæ»»Îª½âÊÍÄ£Ê½Ö´ĞĞ
+        /// ä¸ºaot assemblyåŠ è½½åŸå§‹metadataï¼Œ è¿™ä¸ªä»£ç æ”¾aotæˆ–è€…çƒ­æ›´æ–°éƒ½è¡Œã€‚
+        /// ä¸€æ—¦åŠ è½½åï¼Œå¦‚æœAOTæ³›å‹å‡½æ•°å¯¹åº”nativeå®ç°ä¸å­˜åœ¨ï¼Œåˆ™è‡ªåŠ¨æ›¿æ¢ä¸ºè§£é‡Šæ¨¡å¼æ‰§è¡Œ
         /// </summary>
         internal static void LoadMetadataForAOTAssemblies(List<string> AOTMetaAssemblyNames)
         {
-            // ¿ÉÒÔ¼ÓÔØÈÎÒâaot assemblyµÄ¶ÔÓ¦µÄdll¡£µ«ÒªÇódll±ØĞëÓëunity build¹ı³ÌÖĞÉú³ÉµÄ²Ã¼ôºóµÄdllÒ»ÖÂ£¬¶ø²»ÄÜÖ±½ÓÊ¹ÓÃÔ­Ê¼dll¡£
-            // ÎÒÃÇÔÚBuildProcessorsÀïÌí¼ÓÁË´¦Àí´úÂë£¬ÕâĞ©²Ã¼ôºóµÄdllÔÚ´ò°üÊ±×Ô¶¯±»¸´ÖÆµ½ {ÏîÄ¿Ä¿Â¼}/HybridCLRData/AssembliesPostIl2CppStrip/{Target} Ä¿Â¼¡£
+            // å¯ä»¥åŠ è½½ä»»æ„aot assemblyçš„å¯¹åº”çš„dllã€‚ä½†è¦æ±‚dllå¿…é¡»ä¸unity buildè¿‡ç¨‹ä¸­ç”Ÿæˆçš„è£å‰ªåçš„dllä¸€è‡´ï¼Œè€Œä¸èƒ½ç›´æ¥ä½¿ç”¨åŸå§‹dllã€‚
+            // æˆ‘ä»¬åœ¨BuildProcessorsé‡Œæ·»åŠ äº†å¤„ç†ä»£ç ï¼Œè¿™äº›è£å‰ªåçš„dllåœ¨æ‰“åŒ…æ—¶è‡ªåŠ¨è¢«å¤åˆ¶åˆ° {é¡¹ç›®ç›®å½•}/HybridCLRData/AssembliesPostIl2CppStrip/{Target} ç›®å½•ã€‚
 
-            /// ×¢Òâ£¬²¹³äÔªÊı¾İÊÇ¸øAOT dll²¹³äÔªÊı¾İ£¬¶ø²»ÊÇ¸øÈÈ¸üĞÂdll²¹³äÔªÊı¾İ¡£
-            /// ÈÈ¸üĞÂdll²»È±ÔªÊı¾İ£¬²»ĞèÒª²¹³ä£¬Èç¹ûµ÷ÓÃLoadMetadataForAOTAssembly»á·µ»Ø´íÎó
+            /// æ³¨æ„ï¼Œè¡¥å……å…ƒæ•°æ®æ˜¯ç»™AOT dllè¡¥å……å…ƒæ•°æ®ï¼Œè€Œä¸æ˜¯ç»™çƒ­æ›´æ–°dllè¡¥å……å…ƒæ•°æ®ã€‚
+            /// çƒ­æ›´æ–°dllä¸ç¼ºå…ƒæ•°æ®ï¼Œä¸éœ€è¦è¡¥å……ï¼Œå¦‚æœè°ƒç”¨LoadMetadataForAOTAssemblyä¼šè¿”å›é”™è¯¯
             /// 
             HomologousImageMode mode = HomologousImageMode.SuperSet;
             foreach (var aotDllName in AOTMetaAssemblyNames)
             {
                 byte[] dllBytes = GetAssetData(aotDllName);
-                // ¼ÓÔØassembly¶ÔÓ¦µÄdll£¬»á×Ô¶¯ÎªËühook¡£Ò»µ©aot·ºĞÍº¯ÊıµÄnativeº¯Êı²»´æÔÚ£¬ÓÃ½âÊÍÆ÷°æ±¾´úÂë
+                // åŠ è½½assemblyå¯¹åº”çš„dllï¼Œä¼šè‡ªåŠ¨ä¸ºå®ƒhookã€‚ä¸€æ—¦aotæ³›å‹å‡½æ•°çš„nativeå‡½æ•°ä¸å­˜åœ¨ï¼Œç”¨è§£é‡Šå™¨ç‰ˆæœ¬ä»£ç 
                 LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(dllBytes, mode);
                 Debug.Log($"LoadMetadataForAOTAssembly:{aotDllName}. mode:{mode} return:{err}");
             }

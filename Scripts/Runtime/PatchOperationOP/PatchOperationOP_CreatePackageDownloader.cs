@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+ï»¿using SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections;
 using UnityEngine;
 using YooAsset;
@@ -11,7 +11,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "´´½¨²¹¶¡ÏÂÔØÆ÷£¡"));
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "åˆ›å»ºè¡¥ä¸ä¸‹è½½å™¨ï¼"));
             CreateDownloader().Start();
         }
 
@@ -19,11 +19,11 @@ namespace SangoUtils.Patchs_YooAsset
         {
             yield return new WaitForSecondsRealtime(0.5f);
 
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.BuildPipeline.ToString();
             var package = YooAssets.GetPackage(packageName);
-            int downloadingMaxNum = EventBus_Patchs.PatchOperation.PatchOperationData.DownloadingMaxNum;
-            int failedTryAgain = EventBus_Patchs.PatchOperation.PatchOperationData.FailedTryAgain;
-            int timeout = EventBus_Patchs.PatchOperation.PatchOperationData.Timeout;
+            int downloadingMaxNum = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.DownloadingMaxNum;
+            int failedTryAgain = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.FailedTryAgain;
+            int timeout = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.Timeout;
             var downloader = package.CreateResourceDownloader(downloadingMaxNum, failedTryAgain, timeout);
 
             EventBus_Patchs.PatchOperation.PatchOperationData.ResourceDownloaderOperation = downloader;
@@ -35,8 +35,8 @@ namespace SangoUtils.Patchs_YooAsset
             }
             else
             {
-                // ·¢ÏÖĞÂ¸üĞÂÎÄ¼şºó£¬¹ÒÆğÁ÷³ÌÏµÍ³
-                // ×¢Òâ£º¿ª·¢ÕßĞèÒªÔÚÏÂÔØÇ°¼ì²â´ÅÅÌ¿Õ¼ä²»×ã
+                // å‘ç°æ–°æ›´æ–°æ–‡ä»¶åï¼ŒæŒ‚èµ·æµç¨‹ç³»ç»Ÿ
+                // æ³¨æ„ï¼šå¼€å‘è€…éœ€è¦åœ¨ä¸‹è½½å‰æ£€æµ‹ç£ç›˜ç©ºé—´ä¸è¶³
                 int totalDownloadCount = downloader.TotalDownloadCount;
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
                 EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.FoundUpdateFiles, totalDownloadCount, totalDownloadBytes));

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine.Events;
 
 namespace SangoUtils.Patchs_YooAsset.Utils

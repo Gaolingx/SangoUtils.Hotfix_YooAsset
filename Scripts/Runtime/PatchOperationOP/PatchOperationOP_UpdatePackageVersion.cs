@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+锘縰sing SangoUtils.Patchs_YooAsset.Utils;
 using System.Collections;
 using UnityEngine;
 using YooAsset;
@@ -11,7 +11,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         internal override void OnEvent()
         {
-            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "获取最新的资源版本!"));
+            EventBus_Patchs.SangoPatchRoot.SendMessage(this, new PatchSystemEventArgs(PatchSystemEventCode.PatchStatesChange, "鑾峰彇鏈�鏂扮殑璧勬簮鐗堟湰!"));
             UpdatePackageVersion().Start();
         }
 
@@ -19,9 +19,9 @@ namespace SangoUtils.Patchs_YooAsset
         {
             yield return new WaitForSecondsRealtime(0.5f);
 
-            var appendTimeTicks = EventBus_Patchs.PatchOperation.PatchOperationData.AppendTimeTicks;
-            var timeout = EventBus_Patchs.PatchOperation.PatchOperationData.Timeout;
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var appendTimeTicks = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.AppendTimeTicks;
+            var timeout = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.Timeout;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
             var package = YooAssets.GetPackage(packageName);
             var operation = package.UpdatePackageVersionAsync(appendTimeTicks, timeout);
             yield return operation;

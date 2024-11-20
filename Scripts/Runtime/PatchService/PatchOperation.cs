@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+﻿using SangoUtils.Patchs_YooAsset.Utils;
 using System;
 using System.Collections.Generic;
 using YooAsset;
@@ -56,22 +56,7 @@ namespace SangoUtils.Patchs_YooAsset
             Add<PatchOperationOP_UpdateLoadHotfixDll>();
             Add<PatchOperationOP_UpdaterDone>();
 
-            PatchOperationData = new(_currentPatchConfig.PackageName,
-                _currentPatchConfig.PlayMode,
-                _currentPatchConfig.BuildPipeline.ToString(),
-                _currentPatchConfig.HostServerIP,
-                _currentPatchConfig.AppID,
-                _currentPatchConfig.AppVersion,
-                _currentPatchConfig.AppendTimeTicks,
-                _currentPatchConfig.Timeout,
-                _currentPatchConfig.DownloadingMaxNum,
-                _currentPatchConfig.FailedTryAgain,
-                _currentPatchConfig.SangoPatchWnd,
-                _currentPatchConfig.GameRootObjectName,
-                _currentPatchConfig.GameRootParentTransform,
-                _currentPatchConfig.HotUpdateDllList,
-                _currentPatchConfig.AOTMetaAssemblyNames,
-                _currentPatchConfig.OnUpdaterDone);
+            PatchOperationData = new PatchOperationData(_currentPatchConfig);
 
             void Add<T>() where T : PatchOperationOP_Base
             {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -96,46 +96,14 @@ namespace SangoUtils.Patchs_YooAsset
 
     internal class PatchOperationData
     {
-        internal PatchOperationData(string packageName, EPlayMode playMode, string buildPipline, string hostServerIP, string appID, string appVersion, bool appendTimeTicks, int timeout, int downloadingMaxNum, int failedTryAgain,
-            GameObject sangoPatchWnd, string gameRootObjectName, Transform gameRootParentTransform, List<string> hotUpdateDllList, List<string> aotMetaAssemblyNames, UnityEvent onUpdaterDone)
-        {
-            PackageName = packageName;
-            PlayMode = playMode;
-            BuildPipline = buildPipline;
-            HostServerIP = hostServerIP;
-            AppID = appID;
-            AppVersion = appVersion;
-            AppendTimeTicks = appendTimeTicks;
-            Timeout = timeout;
-            DownloadingMaxNum = downloadingMaxNum;
-            FailedTryAgain = failedTryAgain;
-            SangoPatchWnd = sangoPatchWnd;
-            GameRootObjectName = gameRootObjectName;
-            GameRootParentTransform = gameRootParentTransform;
-            HotUpdateDllList = hotUpdateDllList;
-            AOTMetaAssemblyNames = aotMetaAssemblyNames;
-            OnUpdaterDone = onUpdaterDone;
-        }
-
-        internal string PackageName { get; }
-        internal EPlayMode PlayMode { get; }
-        internal string BuildPipline { get; }
-        internal string HostServerIP { get; }
-        internal string AppID { get; }
-        internal string AppVersion { get; }
-        public bool AppendTimeTicks { get; }
-        public int Timeout { get; }
-        public int DownloadingMaxNum { get; }
-        public int FailedTryAgain { get; }
-        public GameObject SangoPatchWnd { get; }
-        public string GameRootObjectName { get; }
-        public Transform GameRootParentTransform { get; }
-
-        public List<string> HotUpdateDllList { get; }
-        public List<string> AOTMetaAssemblyNames { get; }
-        internal UnityEvent OnUpdaterDone { get; }
+        internal SangoPatchConfig PatchConfig { get; set; }
 
         internal string PackageVersion { get; set; }
         internal ResourceDownloaderOperation ResourceDownloaderOperation { get; set; }
+
+        internal PatchOperationData(SangoPatchConfig patchConfig)
+        {
+            PatchConfig = patchConfig;
+        }
     }
 }

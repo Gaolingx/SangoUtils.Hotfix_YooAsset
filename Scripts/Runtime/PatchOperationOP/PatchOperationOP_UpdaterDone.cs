@@ -1,4 +1,4 @@
-using SangoUtils.Patchs_YooAsset.Utils;
+﻿using SangoUtils.Patchs_YooAsset.Utils;
 using UnityEngine;
 using YooAsset;
 
@@ -11,16 +11,16 @@ namespace SangoUtils.Patchs_YooAsset
         internal override void OnEvent()
         {
             LoadGameRootObject();
-            EventBus_Patchs.PatchOperation.PatchOperationData.OnUpdaterDone?.Invoke();
+            EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.OnUpdaterDone?.Invoke();
         }
 
         private void LoadGameRootObject()
         {
-            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PackageName;
+            var packageName = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.PackageName;
             var package = YooAssets.GetPackage(packageName);
-            var GameRootObject = EventBus_Patchs.PatchOperation.PatchOperationData.GameRootObjectName;
+            var GameRootObject = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.GameRootObjectName;
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
-            GameObject hotFixRoot = asset1.InstantiateSync(EventBus_Patchs.PatchOperation.PatchOperationData.GameRootParentTransform);
+            GameObject hotFixRoot = asset1.InstantiateSync(EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.GameRootParentTransform);
 
             if (hotFixRoot.TryGetComponent<RectTransform>(out var rect))
             {
