@@ -5,26 +5,27 @@ using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    public class SangoPatchConfig
+    [CreateAssetMenu(fileName = "PatchConfig", menuName = "ScriptableObjects/Patchs_YooAsset/SangoPatchConfig", order = 1)]
+    public class SangoPatchConfig : ScriptableObject
     {
-        public string HostServerIP { get; set; }
-        public string AppID { get; set; }
-        public string AppVersion { get; set; }
-        public bool AppendTimeTicks { get; set; }
-        public int Timeout { get; set; }
-        public int DownloadingMaxNum { get; set; }
-        public int FailedTryAgain { get; set; }
+        public string HostServerIP;
+        public string AppID;
+        public string AppVersion;
+        public bool AppendTimeTicks = true;
+        public int Timeout = 60;
+        public int DownloadingMaxNum = 10;
+        public int FailedTryAgain = 3;
 
-        public string PackageName { get; set; }
-        public EPlayMode PlayMode { get; set; }
-        public EDefaultBuildPipeline BuildPipeline { get; set; }
+        public string PackageName = "DefaultPackage";
+        public EPlayMode PlayMode = EPlayMode.EditorSimulateMode;
+        public EDefaultBuildPipeline BuildPipeline = EDefaultBuildPipeline.BuiltinBuildPipeline;
 
-        public GameObject SangoPatchWnd { get; set; }
-        public string GameRootObjectName { get; set; }
-        public Transform GameRootParentTransform { get; set; }
-        public List<string> HotUpdateDllList { get; set; }
-        public List<string> AOTMetaAssemblyNames { get; set; }
+        public GameObject SangoPatchWnd;
+        public string GameRootObjectName;
+        public Transform GameRootParentTransform;
+        public List<string> HotUpdateDllList;
+        public List<string> AOTMetaAssemblyNames;
 
-        public UnityEvent OnUpdaterDone { get; set; }
+        public UnityEvent OnUpdaterDone;
     }
 }
