@@ -38,7 +38,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &827656286555271066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_AnchorMax.y
@@ -68,7 +68,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_AnchorMin.y
@@ -76,11 +76,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2880
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1620
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 745676617468238462, guid: 1dc08fa7887ec744bba872b6d80d5e69, type: 3}
       propertyPath: m_LocalPosition.x
@@ -222,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5456539686814339195, guid: cea1159a7e85b3f40a118294ede251a2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5456539686814339195, guid: cea1159a7e85b3f40a118294ede251a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -337,10 +337,6 @@ PrefabInstance:
     - target: {fileID: 8372635064853897010, guid: c68d29858286fe8409e7ce75f46b6885, type: 3}
       propertyPath: m_Name
       value: MessageBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 8372635064853897010, guid: c68d29858286fe8409e7ce75f46b6885, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c68d29858286fe8409e7ce75f46b6885, type: 3}

@@ -33,15 +33,15 @@ namespace SangoUtils.Patchs_YooAsset
             _messageBoxContent = _messageBoxTrans.Find("messageBoxContent").GetComponent<TMP_Text>();
 
             _loadingProgressFG = _hotFixProgressPanel.Find("LoadingProgressFG").GetComponent<Image>();
-            _loadingProgressPoint = _hotFixProgressPanel.Find("LoadingProgressPoint").GetComponent<Image>();
+            _loadingProgressPoint = _hotFixProgressPanel.Find("LoadingProgressFG/LoadingProgressPoint").GetComponent<Image>();
             _loadingProgressText = _hotFixProgressPanel.Find("LoadingProgressText").GetComponent<TMP_Text>();
 
             _loadingProgressFGWidth = _loadingProgressFG.GetComponent<RectTransform>().sizeDelta.x;
             _loadingProgressPointYPos = _loadingProgressPoint.GetComponent<RectTransform>().sizeDelta.y;
             _loadingProgressText.text = "0%";
             _loadingProgressFG.fillAmount = 0;
-            _loadingProgressPoint.transform.localPosition = new Vector3(-_loadingProgressFGWidth / 2, _loadingProgressPointYPos, 0);
-            
+            _loadingProgressPoint.transform.localPosition = new Vector3(-_loadingProgressFGWidth / 2, 0, 0);
+
             _messageBoxTrans.gameObject.SetActive(false);
             _tips.SetText("欢迎使用热更新系统");
         }
@@ -73,7 +73,7 @@ namespace SangoUtils.Patchs_YooAsset
             _loadingProgressText.text = (int)(loadingProgress * 100) + "%";
             _loadingProgressFG.fillAmount = loadingProgress;
             float positionLoadingProgressPoint = loadingProgress * _loadingProgressFGWidth - _loadingProgressFGWidth / 2;
-            _loadingProgressPoint.transform.localPosition = new Vector3(positionLoadingProgressPoint, _loadingProgressPointYPos, 0);
+            _loadingProgressPoint.transform.localPosition = new Vector3(positionLoadingProgressPoint, 0, 0);
         }
 
         private void OnMessageBoxOKBtnClicked()

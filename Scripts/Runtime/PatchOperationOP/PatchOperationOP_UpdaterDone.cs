@@ -20,13 +20,8 @@ namespace SangoUtils.Patchs_YooAsset
             var package = YooAssets.GetPackage(packageName);
             var GameRootObject = EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.GameRootObjectName;
             var asset1 = package.LoadAssetSync<GameObject>(GameRootObject);
-            GameObject hotFixRoot = asset1.InstantiateSync(EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.GameRootParentTransform);
-
-            if (hotFixRoot.TryGetComponent<RectTransform>(out var rect))
-            {
-                rect.offsetMax = new Vector2(0, 0);
-                rect.offsetMin = new Vector2(0, 0);
-            }
+            var asset1Transform = GameObject.Find(EventBus_Patchs.PatchOperation.PatchOperationData.PatchConfig.GameRootParentTransform).transform;
+            asset1.InstantiateSync(new Vector3(0, 0, 0), Quaternion.identity, asset1Transform);
         }
     }
 }

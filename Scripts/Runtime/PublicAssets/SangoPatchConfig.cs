@@ -5,7 +5,7 @@ using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
 {
-    [CreateAssetMenu(fileName = "PatchConfig", menuName = "ScriptableObjects/Patchs_YooAsset/SangoPatchConfig", order = 1)]
+    [CreateAssetMenu(fileName = "SangoPatchConfigAssets", menuName = "ScriptableObjects/Patchs_YooAsset/SangoPatchConfigAssets", order = 1)]
     public class SangoPatchConfig : ScriptableObject
     {
         public string HostServerIP;
@@ -22,7 +22,7 @@ namespace SangoUtils.Patchs_YooAsset
 
         public GameObject SangoPatchWnd;
         public string GameRootObjectName;
-        public Transform GameRootParentTransform;
+        public string GameRootParentTransform;
         public List<string> HotUpdateDllList;
         public List<string> AOTMetaAssemblyNames;
 

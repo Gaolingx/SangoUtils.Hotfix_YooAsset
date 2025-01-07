@@ -19,11 +19,8 @@ namespace SangoUtils.Patchs_YooAsset
 
         private void OnInit(SangoPatchConfig patchConfig)
         {
-            //_sangoPatchWnd = transform.Find("SangoPatchWnd").GetComponent<SangoPatchWnd>();
-
-            GameObject patchWnd = Instantiate(patchConfig.SangoPatchWnd, new Vector3(0, 0, 0), Quaternion.identity, patchConfig.GameRootParentTransform);
-            patchWnd.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
-            patchWnd.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
+            var patchWndTransform = GameObject.Find(patchConfig.GameRootParentTransform).transform;
+            GameObject patchWnd = Instantiate(patchConfig.SangoPatchWnd, new Vector3(0, 0, 0), Quaternion.identity, patchWndTransform);
 
             _sangoPatchWnd = patchWnd.AddComponent<SangoPatchWnd>();
 
