@@ -12,6 +12,7 @@ namespace SangoUtils.Patchs_YooAsset
         public string AppID;
         public string AppVersion;
         public bool AppendTimeTicks = true;
+        public bool SkipCertificate = false;
         public int Timeout = 60;
         public int DownloadingMaxNum = 10;
         public int FailedTryAgain = 3;

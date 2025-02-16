@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using YooAsset;
 
 namespace SangoUtils.Patchs_YooAsset
@@ -47,9 +48,32 @@ namespace SangoUtils.Patchs_YooAsset
             StartOperation().Start();
         }
 
+        public UnityWebRequest CustomWebRequester(string url)
+        {
+            var request = new UnityWebRequest(url, UnityWebRequest.kHttpVerbGET);
+            if (_currentPatchConfig.SkipCertificate)
+            {
+                request.certificateHandler = new WebRequestSkipCertificate();
+            }
+            return request;
+        }
+
+        /// <summary>
+        /// 跳过Web请求证书
+        /// </summary>
+        public class WebRequestSkipCertificate : CertificateHandler
+        {
+            protected override bool ValidateCertificate(byte[] certificateData)
+            {
+                return true;
+            }
+        }
+
         private IEnumerator StartOperation()
         {
             YooAssets.Initialize();
+
+            YooAssets.SetDownloadSystemUnityWebRequest(CustomWebRequester);
 
             PatchOperation hotFixOperation = new PatchOperation(_currentPatchConfig);
             YooAssets.StartOperation(hotFixOperation);
